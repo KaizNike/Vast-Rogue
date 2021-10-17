@@ -1,19 +1,21 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Fonts/MajorMonoDisplay/MajorMonoDisplay-Regular.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://src/Testing/TextEdit.gd" type="Script" id=2]
-[ext_resource path="res://Assets/Fonts/hf-free-complete/futile-pro-v1/FutilePro.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Fonts/hf-free-complete/futile-pro-v1/FutilePro.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://src/Scripts/TextEdit.gd" type="Script" id=3]
+[ext_resource path="res://src/Scenes/Main.gd" type="Script" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
-font_data = ExtResource( 3 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=3]
-font_data = ExtResource( 3 )
+font_data = ExtResource( 2 )
 
-[node name="ConsoleGameTest" type="Node"]
+[node name="Main" type="Node"]
+script = ExtResource( 4 )
 
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0
@@ -59,7 +61,7 @@ show_line_numbers = true
 draw_spaces = true
 shortcut_keys_enabled = false
 caret_blink = true
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="HSplitContainer" type="HSplitContainer" parent="UI/VBoxContainer"]
 margin_top = 576.0
@@ -83,3 +85,10 @@ margin_bottom = 24.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.47451, 0.658824, 1, 1 )
 text = "==>"
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.075
+
+[connection signal="text_entered" from="UI/VBoxContainer/HSplitContainer/LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
