@@ -97,7 +97,9 @@ func command_parse(text : String):
 		display_text_by_scrolling(printText)
 		pass
 	elif text == "version":
-		display_text_by_scrolling("V " + str(version[0]) + "." + str(version[1]) + "." + str(version[2]) + version[3])
+		display_text_by_scrolling("\nV " + str(version[0]) + "." + str(version[1]) + "." + str(version[2]) + version[3])
+	elif text == "quit":
+		get_tree().quit(1)
 	elif parse.size() == 3:
 		if parse[0] == "look" and parse[1] == "at":
 			if parse[2] == "keypad":
@@ -170,6 +172,8 @@ func _on_LineEdit_text_changed(new_text):
 		switch_green(true)
 		pass
 	elif new_text == "version":
+		switch_green(true)
+	elif new_text == "quit":
 		switch_green(true)
 	elif parse[0] == "look" and parse[1] == "at" and size == 3: 
 		if parse[2] == "keypad":
