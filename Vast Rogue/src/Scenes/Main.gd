@@ -20,7 +20,23 @@ var levelMeta = {
 	}
 }
 
-var Rooms = [
+var Rooms = []
+
+# Scen == "Starting"
+var RoomsStarting = [
+	[
+		["#","#","#","#"],
+		["#",".","@","$"],
+		["#","#","#","#"]
+	]
+]
+
+var storyPromptsStarting = [
+	"It seems you were born not a few days ago upon this ____, place. \nYet to be determined really. \nYou are not yet cognizant of much or will you remember much."
+]
+
+# Scen == "SelfSufficient"
+var RoomsSelfSufficient = [
 	[
 		["#","#","K","#", "#", "#"],
 		["#", "@", ".", "D", ".", "#"],
@@ -40,14 +56,18 @@ var Rooms = [
 		["#","#","#","#","#","#"," "," "]	
 	]
 ]
+
+var storyPromptsSelfSuff = [
+	"""You awaken in your room. Just another day on this space station... Right?"""
+]
  
 var textStore = ""
 var textStoreLen = 0
 var textStoreIndex = 0
 
-var storyPrompts = [
-	"""You awaken in your room. Just another day on this space station... Right?"""
-]
+var scenario = "Starting"
+
+var storyPrompts = []
 
 var healthPrompts = [
 	"You feel in perfect health, if that means something to you.",
@@ -68,6 +88,10 @@ var player = {"loc": Vector2(1,1), "floor": 0, "currentRoom": "playerRoom", "hp"
 func _ready():
 	randomize()
 	textEdit.text = ""
+	match scenario:
+		"Starting":
+			Rooms = RoomsStarting.duplicate(true)
+			storyPrompts = storyPromptsStarting.duplicate(true)
 #	print(Rooms[1])
 #	print(player.loc)
 	var f = randi() % 2
@@ -160,6 +184,7 @@ func _on_Timer_timeout():
 # Done after pressing enter or button.
 func _on_LineEdit_text_entered(new_text):
 	$UI/VBoxContainer/HSplitContainer/LineEdit.text = ""
+	switch_green(false)
 	command_parse(new_text)
 
 
@@ -188,4 +213,4 @@ func _on_LineEdit_text_changed(new_text):
 # When ==> pressed, doubles as enter
 func _on_Button_pressed():
 	_on_LineEdit_text_entered($UI/VBoxContainer/HSplitContainer/LineEdit.text)
-	switch_green(false)
+#	switch_green(false)
